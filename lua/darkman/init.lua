@@ -10,7 +10,7 @@ local defaults = {
 }
 
 function M.setup(opts)
-  opts = vim.tbl_deep_extend("force", defaults, options or {})
+  opts = vim.tbl_deep_extend("force", defaults, opts or {})
 
   if loaded then
     return
