@@ -1,7 +1,3 @@
-## 🚧 Under Construction 🚧
-
-This plugin is not yet complete. Please use with caution.
-
 # Darkman.nvim
 
 **Darkman.nvim** is a neovim plugin written in Golang, designed to interface
@@ -30,4 +26,23 @@ use {
 
 ## Configuration
 
-TODO lol
+`setup` takes a dictionary of the following values (and defaults)
+```lua
+{
+  change_background = true,
+  send_user_event = false,
+  colorscheme = nil, -- can be { dark = "x, light = "y" }
+}
+```
+
+If `change_background` is true, `background` will be automatically set to
+`light` or `dark`.
+Please note that you can add extra functionality by listening to the `OptionSet
+background` autocmd event.
+
+If you would not like darkman.nvim to set `background`, you may set
+`send_user_event=true`. In which case the the `User Darkmode` or `UserLightmode`
+events will be triggered instead.
+
+If the `colorscheme` option is set to a table with `dark` and `light` keys, the
+colorschemes given will be set automatically.
