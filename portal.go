@@ -53,8 +53,6 @@ func (p *Portal) setupSignal() (<-chan uint32, error) {
 			val, ok := sig.Body[2].(dbus.Variant).Value().(uint32)
 			if ok {
 				modeChan <- val
-			} else {
-				modeChan <- 100
 			}
 		}
 	}()
