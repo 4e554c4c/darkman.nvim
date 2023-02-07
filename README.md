@@ -31,7 +31,7 @@ use {
 {
   change_background = true,
   send_user_event = false,
-  colorscheme = nil, -- can be { dark = "x, light = "y" }
+  colorscheme = nil, -- can be { dark = "x", light = "y" }
 }
 ```
 
@@ -41,7 +41,7 @@ Please note that you can add extra functionality by listening to the `OptionSet
 background` autocmd event.
 
 If you would not like darkman.nvim to set `background`, you may set
-`send_user_event=true`. In which case the the `User Darkmode` or `UserLightmode`
+`send_user_event=true`. In which case the `User Darkmode` or `User Lightmode`
 events will be triggered instead.
 
 If the `colorscheme` option is set to a table with `dark` and `light` keys, the
