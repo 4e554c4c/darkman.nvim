@@ -58,7 +58,7 @@ func (args *setupArgs) handleNewMode() error {
 		}
 	}
 	if args.ChangeBackground {
-		err = args.v.Command("background " + background)
+		err = args.v.SetOption("background", background)
 		if err != nil {
 			return err
 		}
