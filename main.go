@@ -72,24 +72,31 @@ func (args *setupArgs) handleNewMode() error {
 	return err
 }
 
-func setup(v *nvim.Nvim, args setupArgs) error {
+func setup(v *nvim.Nvim, args setupArgs) {
 	if currentMode != UNINITIALIZED {
-		return errors.New("setup() already called")
+		v.WriteErr("darkman: setup() already called")
 	}
 	args.v = v
 	p, err := setupPortal()
 	if err != nil {
-		return err
+		v.WriteErr(fmt.Sprintf("darkman: %v", err))
+		return
 	}
 	currentMode, err = p.getMode()
 	if err != nil {
-		return err
+		v.WriteErr(fmt.Sprintf("darkman: %v", err))
+		return
 	}
-	args.handleNewMode()
+	err = args.handleNewMode()
+	if err != nil {
+		v.WriteErr(fmt.Sprintf("darkman: %v", err))
+		return
+	}
 
 	ch, err := p.setupSignal()
 	if err != nil {
-		return err
+		v.WriteErr(fmt.Sprintf("darkman: %v", err))
+		return
 	}
 	go func() {
 		for {
@@ -101,8 +108,6 @@ func setup(v *nvim.Nvim, args setupArgs) error {
 			args.handleNewMode()
 		}
 	}()
-
-	return nil
 }
 
 func main() {

@@ -31,7 +31,7 @@ function M.setup(opts)
   vim.cmd[[
     call remote#host#RegisterPlugin('darkman.nvim', '0', [
     \ {'type': 'function', 'name': 'DarkmanGetMode', 'sync': 1, 'opts': {}},
-    \ {'type': 'function', 'name': 'DarkmanSetup', 'sync': 1, 'opts': {}},
+    \ {'type': 'function', 'name': 'DarkmanSetup', 'sync': 0, 'opts': {}},
     \ ])
   ]]
 
