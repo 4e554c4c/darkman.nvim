@@ -73,41 +73,40 @@ func (args *setupArgs) handleNewMode() error {
 }
 
 func setup(v *nvim.Nvim, args setupArgs) {
+	var err error
+	var p Portal
+	var ch <-chan uint32
 	if currentMode != UNINITIALIZED {
-		v.WriteErr("darkman: setup() already called")
+		err = errors.New("setup() already called")
+		goto error
 	}
 	args.v = v
-	p, err := setupPortal()
-	if err != nil {
-		v.WriteErr(fmt.Sprintf("darkman: %v", err))
-		return
+	if p, err = setupPortal(); err != nil {
+		goto error
 	}
-	currentMode, err = p.getMode()
-	if err != nil {
-		v.WriteErr(fmt.Sprintf("darkman: %v", err))
-		return
+	if currentMode, err = p.getMode(); err != nil {
+		goto error
 	}
-	err = args.handleNewMode()
-	if err != nil {
-		v.WriteErr(fmt.Sprintf("darkman: %v", err))
-		return
+	if err = args.handleNewMode(); err != nil {
+		goto error
 	}
 
-	ch, err := p.setupSignal()
-	if err != nil {
-		v.WriteErr(fmt.Sprintf("darkman: %v", err))
-		return
+	if ch, err = p.setupSignal(); err != nil {
+		goto error
 	}
 	go func() {
 		for {
-			newMode := <-ch
-			if newMode == currentMode {
-				continue
+			if newMode := <-ch; newMode != currentMode {
+				currentMode = newMode
+				args.handleNewMode()
 			}
-			currentMode = newMode
-			args.handleNewMode()
 		}
 	}()
+	return
+
+error:
+	v.WriteErr(fmt.Sprintf("darkman: %v\n", err))
+	return
 }
 
 func main() {
