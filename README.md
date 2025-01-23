@@ -6,23 +6,34 @@ with the Freedesktop Dark-mode standard. It is named after and integrates with
 standard. However, the plugin should work on all compliant desktop environments
 (including Gnome and KDE).
 
+
+## Maintenance status
+
+darkman.nvim is relatively stable, so updates do not come regularly. There is no
+need to assume that the repository is unmaintained if an update hasn't occurred
+for several months. This section will change if the maintenance status for
+darkman.nvim changes.
+
 ## Requirements
 
-This plugin is currently in development, and no versions have been released.
-Thus, to compile darkman.nvim a go compiler is required.
+To compile darkman.nvim a go compiler is required due to
+4e554c4c/darkman.nvim#1. We are working on changing this, but it is currently
+impossible due to the architecture of common neovim package managers.
 
 ## Installation
 
-Using [packer.nvim](https://github.com/wbthomason/packer.nvim)
+Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 ```lua
-use {
+{
   '4e554c4c/darkman.nvim',
-  run = 'go build -o bin/darkman.nvim',
-  config = function()
-    require 'darkman'.setup()
-  end,
+  event = 'VimEnter',
+  build = 'go build -o bin/darkman.nvim',
+  opts = {
+    -- configuration here
+  },
 }
 ```
+
 
 ## Configuration
 
