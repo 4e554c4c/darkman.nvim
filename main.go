@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	UNKNOWN = iota
+	NO_PREFERENCE = iota
 	DARK
 	LIGHT
 	UNINITIALIZED
@@ -43,7 +43,7 @@ func (args *setupArgs) handleNewMode() error {
 		if args.Colorscheme != nil {
 			colorscheme = args.Colorscheme.Dark
 		}
-	case LIGHT:
+	case LIGHT, NO_PREFERENCE:
 		background, event = "light", "LightMode"
 		if args.Colorscheme != nil {
 			colorscheme = args.Colorscheme.Light
